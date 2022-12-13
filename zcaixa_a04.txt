@@ -1,0 +1,68 @@
+*&---------------------------------------------------------------------*
+*& Report zcaixa_a04
+*&---------------------------------------------------------------------*
+*&
+*&---------------------------------------------------------------------*
+REPORT zcaixa_a04.
+
+*Definição de variaveis
+DATA: descricao      TYPE c LENGTH 30,
+      quantidade     TYPE i,
+      preco          TYPE p DECIMALS 2,
+      imposto        TYPE p DECIMALS 2,
+      precofinal     TYPE p DECIMALS 2,
+      desconto       TYPE p DECIMALS 2,
+      data_vecimento TYPE d.
+
+*Definição Campo na tela
+PARAMETERS: p_desc(30) TYPE c,
+            p_qtd      TYPE i,
+            p_data     TYPE sy-datum.
+
+PARAMETERS:
+  p_chkbox TYPE boolean AS CHECKBOX,
+  p_radio1 TYPE boolean RADIOBUTTON GROUP grp1 DEFAULT 'X',
+  p_radio2 TYPE boolean RADIOBUTTON GROUP grp1,
+  p_radio3 TYPE boolean RADIOBUTTON GROUP grp1.
+
+*Atribuição
+descricao = p_desc.
+quantidade = p_qtd.
+
+preco = '2.44'.
+
+*Multiplicação
+imposto = preco * '0.10'.
+
+*soma e multiplicação com priorização
+precofinal = ( preco + imposto ) * quantidade.
+desconto = precofinal * '0.03'.
+
+*Subtração
+precofinal = precofinal - desconto.
+
+*Operações com datas
+data_vecimento = p_data + 30.
+
+
+WRITE:
+/ 'Descrição:', 18 descricao,
+/ 'Quantidade:', 18 p_qtd,
+/ 'Data da Compra:', 18 p_data MM/DD/YYYY.
+
+SKIP.
+
+WRITE:
+/ 'Marca Propria:', 18 p_chkbox,
+/ 'Tamanho P:', 18 p_radio1,
+/ 'Tamanho M:', 18 p_radio2,
+/ 'Tamanho G:', 18 p_radio3.
+
+SKIP.
+
+WRITE:
+/ 'Preço:', 20 preco,
+/ 'Imposto:', 20 imposto,
+/ 'Desconto:', 20 desconto,
+/ 'Preço Final:', 20 precofinal,
+/ 'Data Vencimento', 26 data_vecimento MM/DD/YYYY.
